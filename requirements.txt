@@ -1,0 +1,15 @@
+torch
+transformers
+datasets
+peft
+accelerate
+evaluate
+openai
+mistralai
+anthropic
+fastapi[standard]
+uvicorn[standard]
+bitsandbytes
+scikit-learn
+matplotlib
+pandas
