@@ -1,15 +1,19 @@
-torch
-transformers
-datasets
-peft
-accelerate
-evaluate
-openai
-mistralai
-anthropic
-fastapi[standard]
+# Core ML stack
+torch==2.3.0
+transformers==4.41.2
+datasets==2.19.0
+evaluate==0.4.2
+scikit-learn==1.4.2
+numpy>=1.24
+matplotlib>=3.8
+tqdm>=4.66
+
+# Needed by HF / tokenizers
+accelerate==0.30.1
+tokenizers>=0.15.2
+sentencepiece>=0.2.0
+protobuf<5
+
+fastapi
 uvicorn[standard]
-bitsandbytes
-scikit-learn
-matplotlib
-pandas
+
