@@ -1,4 +1,6 @@
 LABELS = ["negative", "neutral", "positive"]
+NUM_LABELS = len(LABELS)
+
 MAP5_TO_3 = {0: 0, 1: 0, 2: 1, 3: 2, 4: 2}
 
 MAX_LEN = 256

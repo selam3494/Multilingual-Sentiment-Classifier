@@ -1,7 +1,6 @@
 # sentiment/predict.py
 import argparse
 from .model_io import load_model, predict_one
-from .constants import LABELS
 
 def main():
     ap = argparse.ArgumentParser()

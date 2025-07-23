@@ -1,18 +1,13 @@
 # sentiment/data_utils.py
 import numpy as np
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 
-def load_amazon_fr(map3):
-    ds = load_dataset("mteb/amazon_reviews_multi", "fr")
-    ds = ds.map(lambda x: {"labels": map3[x["label"]]})
+def load_amazon(lang: str, map5_to_3: dict):
+    ds = load_dataset("mteb/amazon_reviews_multi", lang)
+    ds = ds.map(lambda x: {"labels": map5_to_3[x["label"]]})
     return ds
 
-def load_amazon_en(map3):
-    ds = load_dataset("mteb/amazon_reviews_multi", "en")
-    ds = ds.map(lambda x: {"labels": map3[x["label"]]})
-    return ds
-
-def stratified_take(split, per_class, seed=42):
+def stratified_take(split: Dataset, per_class: int, seed: int = 42) -> Dataset:
     idxs = []
     labels = np.array(split["labels"])
     rng = np.random.default_rng(seed)

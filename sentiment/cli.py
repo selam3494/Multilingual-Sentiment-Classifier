@@ -3,7 +3,7 @@ import json
 
 from .trainer import train_model
 from .evaluate import eval_model
-from .predict import predict_one
+from .model_io import load_model, predict_one
 
 def main():
     parser = argparse.ArgumentParser(prog="sentiment-cli")
@@ -16,7 +16,7 @@ def main():
     p_train.add_argument("--per_class_train", type=int, default=2000)
     p_train.add_argument("--per_class_val",   type=int, default=400)
     p_train.add_argument("--per_class_test",  type=int, default=600)
-    p_train.add_argument("--output_dir", default="ckpt_light")
+    p_train.add_argument("--output_dir", default="model_en_light_best")
     p_train.add_argument("--cpu", action="store_true")
 
     # EVAL
@@ -37,7 +37,7 @@ def main():
     if args.cmd == "train":
         save_dir, best = train_model(
             lang=args.lang,
-            model_name=args.model_name,
+            model_name=args.model_name or "distilbert-base-multilingual-cased",
             per_class_train=args.per_class_train,
             per_class_val=args.per_class_val,
             per_class_test=args.per_class_test,
@@ -56,7 +56,8 @@ def main():
         print(f"Macro F1: {macro:.4f}")
 
     elif args.cmd == "predict":
-        res = predict_one(args.text, args.model_dir, args.thresh)
+        tok, model, device = load_model(args.model_dir)
+        res = predict_one(args.text, tok, model, device, args.thresh)
         print(json.dumps(res, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
