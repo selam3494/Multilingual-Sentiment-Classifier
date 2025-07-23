@@ -1,11 +1,3 @@
-# Multilingual-Sentiment-Classifier
-**Short repo blurb (GitHub description field):**
-Multilingual sentiment classifier: finetunes XLM-R on Spanish reviews, serves a tiny API, shows zero-shot vs finetuned F1.
-
----
-
-**README opening section (copy-paste):**
-
 # Multilingual Sentiment Classifier
 
 A fast, no-drama project that proves you can wrangle transformers, transfer learning, and LLMs in under 48 hours.
