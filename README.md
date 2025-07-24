@@ -10,8 +10,9 @@ It trains a 3‑class sentiment model (negative / neutral / positive) on
 | Step                | Screenshot                                                                     |
 | ------------------- | ------------------------------------------------------------------------------ |
 | **1 – Training**    | ![Training log](./Screenshot%20from%202025-07-24%2010-48-26.png)               |
-| **2 – Evaluation**  | ![Confusion matrix + metrics](./Screenshot%20from%202025-07-24%2010-48-55.png) |
-| **3 – CLI predict** | ![Single‑text inference](./Screenshot%20from%202025-07-24%2010-49-21.png)      |
+| **2 – CLI predict** | ![Single‑text inference](./Screenshot%20from%202025-07-24%2010-49-21.png)      |
+| **3 – Evaluation**  | ![Confusion matrix + metrics](./Screenshot%20from%202025-07-24%2010-48-55.png) |
+
 
 *(If GitHub preview doesn’t show the images, check that the files exist in the same folder or replace spaces with `%20` as above) ([Stack Overflow][1], [Stack Overflow][2])*
 
