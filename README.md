@@ -141,7 +141,6 @@ curl -X POST http://localhost:8000/predict \
 | Model                          | Macro F1 |
 | ------------------------------ | -------- |
 | DistilBERT‑multilingual (ours) | **0.87** |
-| GPT‑3.5 zero‑shot              | 0.72     |
 
 *(Numbers vary ±0.02)*
 
