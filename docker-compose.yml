@@ -1,0 +1,11 @@
+services:
+  sentiment-api:
+    build: .
+    container_name: sentiment-api
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_DIR: /app/model_en_light_best
+      CONF_THRESH: "0.6"
+    volumes:
+      - ./model_en_light_best:/app/model_en_light_best:ro
