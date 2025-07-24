@@ -1,6 +1,6 @@
 ## Multilingual Sentiment Classifier
 
-A project that proves you can wrangle Transformers, transfer‑learning & FastAPI in under 48 hours.
+A project that proves you can wrangle Transformers, transfer‑learning & deploy it with FastAPI.
 It trains a 3‑class sentiment model (negative / neutral / positive) on multilingual Amazon reviews, evaluates it, and serves predictions through a lightweight API—plus Docker for one‑command deployment.
 
 ## 1‑step install
@@ -147,6 +147,7 @@ curl -X POST http://localhost:8000/predict \
 * Streamlit front‑end
 * Push model to Hugging Face Hub & launch on Spaces
 * Active‑learning loop so users can correct predictions live
+* Improve the accuracy by using GPU based models to maximise quality.
 
 ---
 
