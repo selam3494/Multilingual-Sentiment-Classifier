@@ -4,7 +4,7 @@
 
 | What you’ll do                                            | How long it takes |
 | --------------------------------------------------------- | ----------------- |
-| **Fine‑tune** a multilingual DistilBERT on Amazon reviews | \~15 min on a T4  |
+| **Train & Fine‑tune** a multilingual DistilBERT on Amazon reviews | \~20 min on a T4  |
 | **Evaluate** it (macro‑F1 & confusion matrix)             | seconds           |
 | **Serve** it with FastAPI (locally **or** in Docker)      | 1 coffee          |
 | **Predict** from the CLI or a REST call                   | milliseconds      |
