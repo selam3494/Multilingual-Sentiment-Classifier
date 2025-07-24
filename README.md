@@ -11,7 +11,7 @@
 
 ---
 
-## 🚀 1‑step install
+## 1‑step install
 
 ```bash
 git clone https://github.com/you/multilingual-sentiment-classifier.git
@@ -47,7 +47,7 @@ uvicorn[standard]
 
 ---
 
-## 🤖 Scripts – what they do
+## Scripts – what they do
 
 | File                    | Purpose                                                                                  |
 | ----------------------- | ---------------------------------------------------------------------------------------- |
@@ -63,7 +63,7 @@ The rest (`constants.py`, `data_utils.py`, `model_utils.py`) are just imported h
 
 ---
 
-## 🏋️‍♂️ Train / Evaluate / Predict (host machine)
+## Train / Evaluate / Predict (host machine)
 
 ```bash
 # Train (creates model_en_light_best/)
@@ -78,7 +78,7 @@ python -m sentiment.cli predict "I love this product!" --model_dir model_en_ligh
 
 ---
 
-## 🌐 Serve with FastAPI (no Docker)
+## Serve with FastAPI (no Docker)
 
 ```bash
 uvicorn api.main:app --reload \
@@ -91,7 +91,7 @@ uvicorn api.main:app --reload \
 
 ---
 
-## 🐳 Serve **inside Docker**
+## Serve **inside Docker**
 
 1. **Build image**
 
@@ -136,7 +136,7 @@ curl -X POST http://localhost:8000/predict \
 
 ---
 
-## 📝 Typical results (EN model, 5 k train)
+## Typical results (EN model, 5 k train)
 
 | Model                          | Macro F1 |
 | ------------------------------ | -------- |
@@ -147,7 +147,7 @@ curl -X POST http://localhost:8000/predict \
 
 ---
 
-## 🛠️ Next ideas
+## Next ideas
 
 * Quantize with bits‑and‑bytes → 4 × faster inference
 * Add Streamlit front‑end
