@@ -132,8 +132,8 @@ curl -X POST http://localhost:8000/predict \
 
 | Step                | Screenshot                                                                     |
 | ------------------- | ------------------------------------------------------------------------------ |
-| **1 – Training**    | ![Training log](./Screenshot%20from%202025-07-24%2010-48-26.png)               |
-| **2 – CLI predict** | ![Single‑text inference](./Screenshot%20from%202025-07-24%2010-49-21.png)      |
+| **1 – Train/Predict/Evaluate command** | ![Single‑text inference](./Screenshot%20from%202025-07-24%2010-49-21.png)      |
+| **2 – Training**    | ![Training log](./Screenshot%20from%202025-07-24%2010-48-26.png)               |
 | **3 – Evaluation**  | ![Confusion matrix + metrics](./Screenshot%20from%202025-07-24%2010-48-55.png) |
 
 
