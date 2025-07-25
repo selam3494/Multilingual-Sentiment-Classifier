@@ -1,11 +1,3 @@
-Below is a **drop‑in replacement** for your README that
-
-1. Adds an **“Experiment tracking with MLflow”** section (how to launch the UI, where runs are saved, sample screenshot table).
-2. Includes the three new screenshots (`Screenshot from 2025‑07‑25 15‑34‑27.png`, `…41.png`, `…52.png`) alongside the existing ones.
-
-Copy‑paste over the old `README.md`, commit, and push — GitHub will render the images as long as the `.png` files live in the same folder (spaces already encoded as `%20`).
-
-````markdown
 ## Multilingual Sentiment Classifier
 
 A project that proves you can wrangle Transformers, transfer‑learning & deploy it with FastAPI.  
