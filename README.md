@@ -1,7 +1,17 @@
+Below is a **drop‑in replacement** for your README that
+
+1. Adds an **“Experiment tracking with MLflow”** section (how to launch the UI, where runs are saved, sample screenshot table).
+2. Includes the three new screenshots (`Screenshot from 2025‑07‑25 15‑34‑27.png`, `…41.png`, `…52.png`) alongside the existing ones.
+
+Copy‑paste over the old `README.md`, commit, and push — GitHub will render the images as long as the `.png` files live in the same folder (spaces already encoded as `%20`).
+
+````markdown
 ## Multilingual Sentiment Classifier
 
-A project that proves you can wrangle Transformers, transfer‑learning & deploy it with FastAPI.
-It trains a 3‑class sentiment model (negative / neutral / positive) on multilingual Amazon reviews, evaluates it, and serves predictions through a lightweight API—plus Docker for one‑command deployment.
+A project that proves you can wrangle Transformers, transfer‑learning & deploy it with FastAPI.  
+It trains a **3‑class** sentiment model (negative / neutral / positive) on multilingual Amazon reviews, evaluates it, logs everything to **MLflow**, and serves predictions through a lightweight API—plus Docker for one‑command deployment.
+
+---
 
 ## 1‑step install
 
@@ -11,7 +21,7 @@ cd multilingual-sentiment-classifier
 python -m venv .venv && source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-```
+````
 
 <details>
 <summary><code>requirements.txt</code> (click to view)</summary>
@@ -30,44 +40,64 @@ tokenizers>=0.15.2
 sentencepiece>=0.2.0
 protobuf<5
 
-# Serving
+# Tracking & serving
+mlflow>=2.12
 fastapi
 uvicorn[standard]
 ```
 
 </details>
 
-GitHub renders README markdown natively; images referenced with relative paths resolve automatically after commit ([GitHub Docs][3]).
-
 ---
 
 ## Scripts – what they do
 
-| File                    | Purpose                                                                  |
-| ----------------------- | ------------------------------------------------------------------------ |
-| `sentiment/trainer.py`  | Fine‑tunes the model (class‑weights, freezes base except last 2 layers). |
-| `sentiment/evaluate.py` | Loads a saved model, prints macro‑F1 & writes `confusion_matrix.png`.    |
-| `sentiment/model_io.py` | Helpers: load model, predict one/batch.                                  |
-| `sentiment/cli.py`      | Swiss‑army knife: `train`, `eval`, `predict` commands.                   |
-| `api/main.py`           | FastAPI server with `/health`, `/predict`, `/predict_batch`.             |
-| `Dockerfile`            | Slim Python 3.10 image for serving (CPU‑only).                           |
-| `docker-compose.yml`    | Mounts the trained model & publishes port 8000.                          |
-| Other helpers           | `constants.py`, `data_utils.py`, `model_utils.py`—imported utilities.    |
+| File                    | Purpose                                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `sentiment/trainer.py`  | Fine‑tunes the model (class‑weights, freezes base except last 2 layers) **and logs parameters/metrics to MLflow.** |
+| `sentiment/evaluate.py` | Loads a saved model, prints macro‑F1, saves `confusion_matrix.png`, **logs to MLflow**.                            |
+| `sentiment/model_io.py` | Helpers: load model, predict one/batch.                                                                            |
+| `sentiment/cli.py`      | Swiss‑army knife: `train`, `eval`, `predict` commands.                                                             |
+| `api/main.py`           | FastAPI server with `/health`, `/predict`, `/predict_batch`.                                                       |
+| `Dockerfile`            | Slim Python 3.10 image for serving (CPU‑only).                                                                     |
+| `docker-compose.yml`    | Mounts the trained model & publishes port 8000.                                                                    |
+| Other helpers           | `constants.py`, `data_utils.py`, `model_utils.py`—imported utilities.                                              |
 
 ---
 
 ## Train / Evaluate / Predict (host machine)
 
 ```bash
-# Train (creates model_en_light_best/)
+# Train (creates model_en_light_best/ + MLflow run)
 python -m sentiment.cli train --lang en
 
-# Evaluate
+# Evaluate (logs metric + confusion matrix in the same experiment)
 python -m sentiment.cli eval --model_dir model_en_light_best --lang en
 
 # Predict from CLI
 python -m sentiment.cli predict "I love this product!" --model_dir model_en_light_best
 ```
+
+---
+
+## Experiment tracking with MLflow
+
+```bash
+# Launch the tracking UI in another terminal/tab
+mlflow ui --backend-store-uri mlruns --port 5000
+# → http://localhost:5000
+```
+
+Every `train`/`eval` command creates a run inside the *Sentiment\_Evaluation* experiment:
+
+| Screenshot                                                    | What you see                               |
+| ------------------------------------------------------------- | ------------------------------------------ |
+
+| ![Mlflow](./Screenshot%20from%202025-07-25%2015-34-52.png) |
+| ![Experiment](./Screenshot%20from%202025-07-25%2015-34-27.png)  | All runs with `macro_f1`, lang, model hash |
+| ![Mlflow Parameters](./Screenshot%20from%202025-07-25%2015-34-41.png) |
+
+The default `backend-store-uri` is the local `mlruns/` folder—commit it or point to an S3/DB URI for team sharing.
 
 ---
 
@@ -89,7 +119,7 @@ uvicorn api.main:app --reload \
 1. **Build**
 
 ```bash
-docker compose build          # or docker build -t sentiment-api .
+docker compose build          # or: docker build -t sentiment-api .
 ```
 
 2. **Run**
@@ -126,41 +156,39 @@ curl -X POST http://localhost:8000/predict \
      -H "Content-Type: application/json" \
      -d '{"text":"Esto es fantástico"}'
 ```
+
 ---
 
-### Quick tour (click to zoom)
+## Quick tour (click to zoom)
 
-| Step                | Screenshot                                                                     |
-| ------------------- | ------------------------------------------------------------------------------ |
-| **1 – Train/Predict/Evaluate command** | ![Single‑text inference](./Screenshot%20from%202025-07-24%2010-49-21.png)      |
-| **2 – Training**    | ![Training log](./Screenshot%20from%202025-07-24%2010-48-26.png)               |
-| **3 – Evaluation**  | ![Confusion matrix + metrics](./Screenshot%20from%202025-07-24%2010-48-55.png) |
-
-
-*(If GitHub preview doesn’t show the images, check that the files exist in the same folder or replace spaces with `%20` as above) ([Stack Overflow][1], [Stack Overflow][2])*
+| Step                           | Screenshot                                                    |
+| ------------------------------ | ------------------------------------------------------------- |
+| **Train/Predict/Evaluate CLI** | ![CLI](./Screenshot%20from%202025-07-24%2010-49-21.png)       |
+| **Training loop**              | ![Training](./Screenshot%20from%202025-07-24%2010-48-26.png)  |
+| **Evaluation matrix**          | ![Confusion](./Screenshot%20from%202025-07-24%2010-48-55.png) |
 
 ---
 
 ## Next ideas
 
-* Quantize with bits‑and‑bytes → 4 × faster inference
+* Quantize with bits‑and‑bytes → ↘ latency / ↘ RAM
 * Streamlit front‑end
 * Push model to Hugging Face Hub & launch on Spaces
 * Active‑learning loop so users can correct predictions live
-* Improve the accuracy by using GPU based models to maximise quality.
+* Try a GPU‑heavier backbone (XLM‑R large) for +F1
 
 ---
 
 ### FAQ
 
 **Where should I place `model_en_light_best/`?**
-At repo root (same level as `Dockerfile`). `docker‑compose.yml` mounts it inside the container.
+At repo root (same level as `Dockerfile`). `docker‑compose.yml` mounts it for the container.
 
 **Can I train inside Docker?**
-Yes, but the provided image is CPU‑only. Train on a GPU machine for speed, then copy the exported folder back.
+Yes, but the provided image is CPU‑only. Train on a GPU box, then copy the exported folder back.
 
----
+```
 
-[1]: https://stackoverflow.com/questions/14494747/how-to-add-images-to-readme-md-on-github?utm_source=chatgpt.com "How to add images to README.md on GitHub? - Stack Overflow"
-[2]: https://stackoverflow.com/questions/15764242/is-it-possible-to-make-relative-link-to-image-in-a-markdown-file-in-a-gist?utm_source=chatgpt.com "Is it possible to make relative link to image in a markdown file in a gist?"
-[3]: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes?utm_source=chatgpt.com "About READMEs - GitHub Docs"
+*That’s it—README now documents MLflow usage and shows the new screenshots.*
+::contentReference[oaicite:0]{index=0}
+```
